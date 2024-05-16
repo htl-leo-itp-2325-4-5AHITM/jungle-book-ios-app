@@ -6,7 +6,7 @@
 //
 
 import Foundation
-fileprivate let checkpointUrlString = "http://localhost:8000/api/checkpoint/list"
+fileprivate let checkpointUrlString = "http://172.17.28.48:8000/api/checkpoint/list"
 func loadAllCheckpoints() async -> [Checkpoint] {
     var checkpoints: [Checkpoint] = [Checkpoint]()
     let url: URL = URL(string: checkpointUrlString)!

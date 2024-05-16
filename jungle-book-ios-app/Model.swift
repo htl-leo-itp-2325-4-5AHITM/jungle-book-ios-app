@@ -7,7 +7,7 @@
 
 import Foundation
 struct Journal: Identifiable, Codable, Hashable {
-    var id: String = ""
+    var id: Int
     var name: String = ""
     var image: String = ""
 }
@@ -24,7 +24,7 @@ struct Model {
     }
 }
 struct Checkpoint: Identifiable, Codable, Hashable {
-    var id: String = ""
+    var id: Int
     var name: String = ""
     var longitude: String = ""
     var latitude: String = ""
