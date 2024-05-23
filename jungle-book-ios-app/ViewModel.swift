@@ -50,7 +50,7 @@ class ViewModel: ObservableObject {
     
         var data = Data()
     
-        // Add the image data to the raw http request data
+    // Add the image data to the raw http request data
         data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
         data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
         data.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)

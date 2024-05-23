@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ec36b0a7-4374-487f-bc91-3f6b81ac3342" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/jungle-book-ios-app/CheckpointService.swift" beforeDir="false" afterPath="$PROJECT_DIR$/jungle-book-ios-app/CheckpointService.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jungle-book-ios-app/ContentView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/jungle-book-ios-app/ContentView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jungle-book-ios-app/JournalService.swift" beforeDir="false" afterPath="$PROJECT_DIR$/jungle-book-ios-app/JournalService.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jungle-book-ios-app/ViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/jungle-book-ios-app/ViewModel.swift" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_288ADB24-34B2-45C6-8768-C85391807E71" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="AppCode" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="1.4" />
+  </component>
+  <component name="ProjectId" id="2gVEaIF2p82GqvspHJuvpFAxM0J" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/it200247/Desktop/jungle-book-ios-app&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ec36b0a7-4374-487f-bc91-3f6b81ac3342" name="Changes" comment="" />
+      <created>1715774406292</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715774406292</updated>
+      <workItem from="1715774407873" duration="2232000" />
+      <workItem from="1716375289790" duration="39000" />
+      <workItem from="1716375341236" duration="2688000" />
+      <workItem from="1716464723448" duration="60000" />
+      <workItem from="1716464793524" duration="15000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
