@@ -83,7 +83,7 @@ public struct PhotoView: View {
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        viewModel.uploadImage("test", "test", inputImage)
+        viewModel.uploadImage(paramName: "test", fileName: "test", image: inputImage)
     }
 }
 public struct ExplorerView: View {
@@ -120,7 +120,11 @@ struct PhotobookView: View {
                     Spacer()
                     VStack {
                         Text("\(journal.name)").font(.system(.title));
-                        AsyncImage(url: URL(string: "http://172.17.28.48:8000/api/image/" + journal.image)).font(.system(size: 50))
+                        AsyncImage(url: URL(string: "http://172.17.28.48:8000/api/image/" + journal.image)){ result in
+                            result.image?
+                                .resizable()
+                        }
+                        .frame(width: 300, height: 200)
                     }
                     Spacer()
                 }

@@ -54,7 +54,7 @@ class ViewModel: ObservableObject {
         data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
         data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
         data.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
-        data.append(image.jpgData()!)
+        data.append(image.pngData()!)
     
         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
     
