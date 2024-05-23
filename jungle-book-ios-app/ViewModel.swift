@@ -39,7 +39,7 @@ class ViewModel: ObservableObject {
         }
         let base64Image = imageData.base64EncodedString()
 
-        let urlString = "http://172.17.28.48:8000/api/journal/upload_image"
+        let urlString = "http://172.17.28.48:8000/api/journal/upload-photo-json"
         
         guard let url = URL(string: urlString) else {
             print("Could not create URL from: \(urlString)")
@@ -48,7 +48,7 @@ class ViewModel: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let json: [String: Any] = ["imageName": base64Image]
         
