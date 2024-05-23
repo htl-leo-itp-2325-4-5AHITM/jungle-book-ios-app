@@ -83,7 +83,7 @@ public struct PhotoView: View {
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        viewModel.uploadImage(inputImage)
+        viewModel.uploadImage("test", "test", inputImage)
     }
 }
 public struct ExplorerView: View {
