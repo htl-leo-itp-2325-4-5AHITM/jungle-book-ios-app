@@ -32,41 +32,40 @@ class ViewModel: ObservableObject {
     func setCheckpoints(checkpoints: [Checkpoint]) {
         model.setCheckpoints(checkpoints)
     }
-    func uploadImage(_ image: UIImage) {
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
-            print("Could not get JPEG representation of UIImage")
-            return
-        }
-        let base64Image = imageData.base64EncodedString()
-
-        let urlString = "http://172.17.28.48:8000/api/journal/upload_image"
-        
-        guard let url = URL(string: urlString) else {
-            print("Could not create URL from: \(urlString)")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-        
-        let json: [String: Any] = ["imageName": base64Image]
-        
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        request.httpBody = jsonData
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "No data")
-                return
+    func uploadImage(paramName: String, fileName: String, image: UIImage) {
+        let url = URL(string: "http://172.17.28.48:8000/api/journal/upload-image")
+    
+        // generate boundary string using a unique per-app string
+        let boundary = UUID().uuidString
+    
+        let session = URLSession.shared
+    
+        // Set the URLRequest to POST and to the specified URL
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+    
+        // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data with file upload in a web browser
+        // And the boundary is also set here
+        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+    
+        var data = Data()
+    
+        // Add the image data to the raw http request data
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
+        data.append(image.jpgData()!)
+    
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+    
+        // Send a POST request to the URL, with the data we created earlier
+        session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
+            if error == nil {
+                let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
+                if let json = jsonData as? [String: Any] {
+                    print(json)
+                }
             }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
-            }
-        }
-        
-        task.resume()
+        }).resume()
     }
 }
