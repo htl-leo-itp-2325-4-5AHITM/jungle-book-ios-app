@@ -33,7 +33,7 @@ class ViewModel: ObservableObject {
         model.setCheckpoints(checkpoints)
     }
     func uploadImage(paramName: String, fileName: String, image: UIImage) {
-        let url = URL(string: "http://172.17.28.48:8000/api/journal/upload-image")
+        let url = URL(string: "http://students.cloud.htl-leonding.ac.at./m.schablinger/api/journal/upload-image")
     
         // generate boundary string using a unique per-app string
         let boundary = UUID().uuidString

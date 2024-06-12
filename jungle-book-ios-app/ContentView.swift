@@ -92,17 +92,50 @@ public struct ExplorerView: View {
     public var body: some View {
         VStack {
             Text("Find checkpoints").font(.system(size: 25));
-            List(viewModel.checkpoints) {
-                checkpoint in
-                VStack {
-                    Text("Name: \(checkpoint.name)")
-                    Text("Coordinates: \(checkpoint.longitude) \(checkpoint.latitude)")
-                    Text("Comment: \(checkpoint.comment)")
-                    Text("Note: \(checkpoint.note)")
-                }
-            }
+            List(viewModel.checkpoints) { checkpoint in
+                            CheckpointView(checkpoint: checkpoint)
+                                .padding(.vertical, 5)
+                        }
+                        .navigationTitle("Checkpoints")
+
             //Image(systemName: "map.fill").font(.system(size: 200))
         }
+    }
+}
+struct CheckpointView: View {
+    let checkpoint: Checkpoint
+    @State private var isExpanded = false
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(checkpoint.name)
+                    .font(.headline)
+                Spacer()
+                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    .foregroundColor(.blue)
+            }
+            .onTapGesture {
+                withAnimation {
+                    isExpanded.toggle()
+                }
+            }
+            
+            if isExpanded {
+                Text("Coordinates: \(checkpoint.longitude) \(checkpoint.latitude)")
+                    .font(.subheadline)
+                    .padding(.top, 2)
+                Text("Comment: \(checkpoint.comment)").font(.subheadline)
+                    .padding(.top, 2)
+                Text("Note: \(checkpoint.note)").font(.subheadline)
+                    .padding(.top, 2)
+                
+            }
+        }
+        .padding()
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(10)
+        .shadow(radius: 5)
     }
 }
 struct PhotobookView: View {
@@ -120,7 +153,7 @@ struct PhotobookView: View {
                     Spacer()
                     VStack {
                         Text("\(journal.name)").font(.system(.title));
-                        AsyncImage(url: URL(string: "http://172.17.28.48:8000/api/image/" + journal.image)){ result in
+                        AsyncImage(url: URL(string: "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/image/" + journal.image)){ result in
                             result.image?
                                 .resizable()
                         }
@@ -150,22 +183,7 @@ struct JournalView: View {
         }
     }
 }
-struct CheckpointView: View {
-    var name: String
-    var longitude: String
-    var latitude: String
-    var comment: String
-    var note: String
-    
-    var body: some View {
-        VStack {
-            Text("Name: \(name)")
-            Text("Coordinates: \(longitude) \(latitude)")
-            Text("Comment: \(comment)")
-            Text("Note: \(note)")
-        }
-    }
-}
+
 //public struct AccountView: View {
 //    public var body: some View {
 //        VStack {
