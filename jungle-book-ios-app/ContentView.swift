@@ -76,14 +76,18 @@ public struct PhotoView: View {
                     .scaledToFit()
             }
         }
-        .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
+        .sheet(isPresented: $isShowingImagePicker, onDismiss: {
+            Task {
+                await loadImage()
+            }
+        }) {
             ImagePicker(image: self.$inputImage)
         }
     }
     
-    func loadImage() {
+    func loadImage() async{
         guard let inputImage = inputImage else { return }
-        viewModel.uploadImage(paramName: "test", fileName: "test", image: inputImage)
+        await viewModel.uploadImage(fileName: "test", image: inputImage)
     }
 }
 public struct ExplorerView: View {

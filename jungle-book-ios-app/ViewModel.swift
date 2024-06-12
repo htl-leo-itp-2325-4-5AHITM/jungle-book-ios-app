@@ -32,40 +32,93 @@ class ViewModel: ObservableObject {
     func setCheckpoints(checkpoints: [Checkpoint]) {
         model.setCheckpoints(checkpoints)
     }
-    func uploadImage(paramName: String, fileName: String, image: UIImage) {
-        let url = URL(string: "http://students.cloud.htl-leonding.ac.at./m.schablinger/api/journal/upload-image")
+    func uploadImage(fileName: String, image: UIImage) async {
+        let url = URL(string: "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/journal/upload-photo")!
+        var multipart = MultipartRequest()
+        multipart.add(
+            key: "file",
+            fileName: fileName,
+            fileMimeType: "image/jpg",
+            fileData: image.jpegData(compressionQuality: 0.5)!
+        )
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue(multipart.httpContentTypeHeadeValue, forHTTPHeaderField: "Content-Type")
+        request.httpBody = multipart.httpBody
+
+        if let (data, response) = try? await URLSession.shared.data(for: request) {
+            print((response as! HTTPURLResponse).statusCode)
+            print(String(data: data, encoding: .utf8)!)
+        }
+    }
+}
+public struct MultipartRequest {
     
-        // generate boundary string using a unique per-app string
-        let boundary = UUID().uuidString
+    public let boundary: String
     
-        let session = URLSession.shared
+    private let separator: String = "\n"
+    private var data: Data
+
+    public init(boundary: String = UUID().uuidString) {
+        self.boundary = boundary
+        self.data = .init()
+    }
     
-        // Set the URLRequest to POST and to the specified URL
-        var urlRequest = URLRequest(url: url!)
-        urlRequest.httpMethod = "POST"
+    private mutating func appendBoundarySeparator() {
+        data.append("--\(boundary)\(separator)")
+    }
     
-        // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data with file upload in a web browser
-        // And the boundary is also set here
-        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-    
-        var data = Data()
-    
-    // Add the image data to the raw http request data
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
-        data.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
-        data.append(image.pngData()!)
-    
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-    
-        // Send a POST request to the URL, with the data we created earlier
-        session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
-            if error == nil {
-                let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-                if let json = jsonData as? [String: Any] {
-                    print(json)
-                }
-            }
-        }).resume()
+    private mutating func appendSeparator() {
+        data.append(separator)
+    }
+
+    private func disposition(_ key: String) -> String {
+        "Content-Disposition: form-data; name=\"\(key)\""
+    }
+
+    public mutating func add(
+        key: String,
+        value: String
+    ) {
+        appendBoundarySeparator()
+        data.append(disposition(key) + separator)
+        appendSeparator()
+        data.append(value + separator)
+    }
+
+    public mutating func add(
+        key: String,
+        fileName: String,
+        fileMimeType: String,
+        fileData: Data
+    ) {
+        appendBoundarySeparator()
+        data.append(disposition(key) + "; filename=\"\(fileName)\"" + separator)
+        data.append("Content-Type: \(fileMimeType)" + separator + separator)
+        data.append(fileData)
+        appendSeparator()
+    }
+
+    public var httpContentTypeHeadeValue: String {
+        "multipart/form-data; boundary=\(boundary)"
+    }
+
+    public var httpBody: Data {
+        var bodyData = data
+        bodyData.append("--\(boundary)--")
+        return bodyData
+    }
+}
+public extension Data {
+
+    mutating func append(
+        _ string: String,
+        encoding: String.Encoding = .utf8
+    ) {
+        guard let data = string.data(using: encoding) else {
+            return
+        }
+        append(data)
     }
 }
