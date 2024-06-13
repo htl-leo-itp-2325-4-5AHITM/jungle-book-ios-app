@@ -65,17 +65,23 @@ public struct PhotoView: View {
     @State private var isShowingImagePicker = false
     @State private var inputImage: UIImage?
     @ObservedObject var viewModel: ViewModel;
+    @State private var name: String = ""
     public var body: some View {
         VStack {
-            Button("Take Photo") {
+            Text("Take Photo").font(.system(size: 25));
+            TextField("Journal Name", text: $name).border(.secondary)
+            Button {
                 self.isShowingImagePicker = true
+            } label: {
+                Image(systemName: "camera").resizable().aspectRatio(contentMode:.fit)
+                    .frame(height: 32.0);
             }
             if let inputImage = self.inputImage {
                 Image(uiImage: inputImage)
                     .resizable()
                     .scaledToFit()
             }
-        }
+        }.textFieldStyle(.roundedBorder)
         .sheet(isPresented: $isShowingImagePicker, onDismiss: {
             Task {
                 await loadImage()
@@ -87,7 +93,7 @@ public struct PhotoView: View {
     
     func loadImage() async{
         guard let inputImage = inputImage else { return }
-        await viewModel.uploadImage(fileName: "test", image: inputImage)
+        await viewModel.uploadImage(fileName: name, image: inputImage)
     }
 }
 public struct ExplorerView: View {
@@ -157,7 +163,8 @@ struct PhotobookView: View {
                     Spacer()
                     VStack {
                         Text("\(journal.name)").font(.system(.title));
-                        AsyncImage(url: URL(string: "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/image/" + journal.image)){ result in
+                        //http://172.17.28.48:8000/api/image/
+                        AsyncImage(url: URL(string: "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/image/" + journal.image)){ result in
                             result.image?
                                 .resizable()
                         }
