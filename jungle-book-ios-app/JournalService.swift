@@ -6,8 +6,8 @@
 //
 
 import Foundation
-fileprivate let journalUrlString = "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/journal/list"
-//fileprivate let journalUrlString = "http://172.17.28.48:8000/api/journal/list"
+//fileprivate let journalUrlString = "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/journal/list"
+fileprivate let journalUrlString = "http://172.17.28.48:8000/api/journal/list"
 func loadAllJournals() async -> [Journal] {
     var journals: [Journal] = [Journal]()
     let url: URL = URL(string: journalUrlString)!

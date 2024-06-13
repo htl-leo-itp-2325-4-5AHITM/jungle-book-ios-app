@@ -33,8 +33,8 @@ class ViewModel: ObservableObject {
         model.setCheckpoints(checkpoints)
     }
     func uploadImage(fileName: String, image: UIImage) async {
-        let url = URL(string: "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/journal/upload-photo")!
-        //let url = URL(string: "http://172.17.28.48:8000/api/journal/upload-photo")!
+        //let url = URL(string: "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/journal/upload-photo")!
+        let url = URL(string: "http://172.17.28.48:8000/api/journal/upload-photo")!
         var multipart = MultipartRequest()
         multipart.add(
             key: "file",

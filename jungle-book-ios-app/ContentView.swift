@@ -27,10 +27,16 @@ struct ContentView: View {
             ExplorerView(viewModel: viewModel).tabItem {
                 Image(systemName: "map.fill")
                 Text("Explorer")
+            }.task {
+                let checkpoints = await loadAllCheckpoints()
+                viewModel.checkpointsLoaded(checkpoints)
             }
             PhotobookView(viewModel: viewModel).tabItem {
                 Image(systemName: "book.closed.fill")
                 Text("Photobook")
+            }.task {
+                let journals = await loadAllJournals()
+                viewModel.journalsLoaded(journals)
             }
         }.task {
             let journals = await loadAllJournals()
@@ -163,8 +169,8 @@ struct PhotobookView: View {
                     Spacer()
                     VStack {
                         Text("\(journal.name)").font(.system(.title));
-                        //http://172.17.28.48:8000/api/image/
-                        AsyncImage(url: URL(string: "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/image/" + journal.image)){ result in
+                        //https://student.cloud.htl-leonding.ac.at/m.schablinger/api/image/
+                        AsyncImage(url: URL(string: "http://172.17.28.48:8000/api/image/" + journal.image)){ result in
                             result.image?
                                 .resizable()
                         }
