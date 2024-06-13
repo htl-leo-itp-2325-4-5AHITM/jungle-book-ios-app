@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//fileprivate let journalUrlString = "http://jungle-book.ddns.net:8000/api/journal/list"
+//fileprivate let journalUrlString = "https://student.cloud.htl-leonding.ac.at./m.schablinger/api/journal/list"
 fileprivate let journalUrlString = "http://172.17.28.48:8000/api/journal/list"
 func loadAllJournals() async -> [Journal] {
     var journals: [Journal] = [Journal]()
@@ -15,10 +15,10 @@ func loadAllJournals() async -> [Journal] {
         if let loadedJournals = try? JSONDecoder().decode([Journal].self, from: data) {
             journals = loadedJournals
         } else {
-            print("failed to decode")
+            print("failed to decode journal")
         }
     } else {
-        print("failed to load url")
+        print("failed to load url journal")
     }
     
     return journals

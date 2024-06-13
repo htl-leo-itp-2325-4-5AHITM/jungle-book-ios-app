@@ -6,7 +6,7 @@
 //
 
 import Foundation
-fileprivate let checkpointUrlString = "http://172.17.28.48:8000/api/checkpoint/list"
+fileprivate let checkpointUrlString = "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/checkpoint/list"
 func loadAllCheckpoints() async -> [Checkpoint] {
     var checkpoints: [Checkpoint] = [Checkpoint]()
     let url: URL = URL(string: checkpointUrlString)!
@@ -14,10 +14,10 @@ func loadAllCheckpoints() async -> [Checkpoint] {
         if let loadedCheckpoints = try? JSONDecoder().decode([Checkpoint].self, from: data) {
             checkpoints = loadedCheckpoints
         } else {
-            print("failed to decode")
+            print("failed to decode checkpoint")
         }
     } else {
-        print("failed to load url")
+        print("failed to load url checkpoint")
     }
     
     return checkpoints

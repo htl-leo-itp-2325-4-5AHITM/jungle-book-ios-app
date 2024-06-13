@@ -30,4 +30,7 @@ struct Checkpoint: Identifiable, Codable, Hashable {
     var latitude: String = ""
     var comment: String = ""
     var note: String = ""
+    var coordinates: String {
+        "Coordinates: \(longitude) \(latitude)"
+    }
 }

@@ -32,41 +32,94 @@ class ViewModel: ObservableObject {
     func setCheckpoints(checkpoints: [Checkpoint]) {
         model.setCheckpoints(checkpoints)
     }
-    func uploadImage(_ image: UIImage) {
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
-            print("Could not get JPEG representation of UIImage")
-            return
-        }
-        let base64Image = imageData.base64EncodedString()
+    func uploadImage(fileName: String, image: UIImage) async {
+        //let url = URL(string: "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/journal/upload-photo")!
+        let url = URL(string: "http://172.17.28.48:8000/api/journal/upload-photo")!
+        var multipart = MultipartRequest()
+        multipart.add(
+            key: "file",
+            fileName: fileName,
+            fileMimeType: "image/jpg",
+            fileData: image.jpegData(compressionQuality: 0.5)!
+        )
 
-        let urlString = "http://172.17.28.48:8000/api/journal/upload-photo-json"
-        
-        guard let url = URL(string: urlString) else {
-            print("Could not create URL from: \(urlString)")
-            return
-        }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let json: [String: Any] = ["imageName": base64Image]
-        
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        request.httpBody = jsonData
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "No data")
-                return
-            }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
-            }
+        request.setValue(multipart.httpContentTypeHeadeValue, forHTTPHeaderField: "Content-Type")
+        request.httpBody = multipart.httpBody
+
+        if let (data, response) = try? await URLSession.shared.data(for: request) {
+            print((response as! HTTPURLResponse).statusCode)
+            print(String(data: data, encoding: .utf8)!)
         }
-        
-        task.resume()
+    }
+}
+public struct MultipartRequest {
+    
+    public let boundary: String
+    
+    private let separator: String = "\n"
+    private var data: Data
+
+    public init(boundary: String = UUID().uuidString) {
+        self.boundary = boundary
+        self.data = .init()
+    }
+    
+    private mutating func appendBoundarySeparator() {
+        data.append("--\(boundary)\(separator)")
+    }
+    
+    private mutating func appendSeparator() {
+        data.append(separator)
+    }
+
+    private func disposition(_ key: String) -> String {
+        "Content-Disposition: form-data; name=\"\(key)\""
+    }
+
+    public mutating func add(
+        key: String,
+        value: String
+    ) {
+        appendBoundarySeparator()
+        data.append(disposition(key) + separator)
+        appendSeparator()
+        data.append(value + separator)
+    }
+
+    public mutating func add(
+        key: String,
+        fileName: String,
+        fileMimeType: String,
+        fileData: Data
+    ) {
+        appendBoundarySeparator()
+        data.append(disposition(key) + "; filename=\"\(fileName)\"" + separator)
+        data.append("Content-Type: \(fileMimeType)" + separator + separator)
+        data.append(fileData)
+        appendSeparator()
+    }
+
+    public var httpContentTypeHeadeValue: String {
+        "multipart/form-data; boundary=\(boundary)"
+    }
+
+    public var httpBody: Data {
+        var bodyData = data
+        bodyData.append("--\(boundary)--")
+        return bodyData
+    }
+}
+public extension Data {
+
+    mutating func append(
+        _ string: String,
+        encoding: String.Encoding = .utf8
+    ) {
+        guard let data = string.data(using: encoding) else {
+            return
+        }
+        append(data)
     }
 }
