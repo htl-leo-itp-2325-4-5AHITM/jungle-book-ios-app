@@ -6,7 +6,7 @@
 //
 
 import Foundation
-fileprivate let checkpointUrlString = "https://student.cloud.htl-leonding.ac.at/m.schablinger/api/checkpoint/list"
+fileprivate let checkpointUrlString = Config.URL + "/api/checkpoint/list"
 func loadAllCheckpoints() async -> [Checkpoint] {
     var checkpoints: [Checkpoint] = [Checkpoint]()
     let url: URL = URL(string: checkpointUrlString)!

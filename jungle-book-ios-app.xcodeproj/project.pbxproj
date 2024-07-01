@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84FD8E602C2B597600241036 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD8E5F2C2B597600241036 /* Config.swift */; };
 		E936A69B2BD144BA00821C4F /* CheckpointService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936A69A2BD144BA00821C4F /* CheckpointService.swift */; };
 		E971ADC22BFF704D00EAB46E /* sprint.adoc in Resources */ = {isa = PBXBuildFile; fileRef = E971ADC12BFF704D00EAB46E /* sprint.adoc */; };
 		E971ADC42BFF708000EAB46E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E971ADC32BFF708000EAB46E /* .gitignore */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84FD8E5F2C2B597600241036 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E936A69A2BD144BA00821C4F /* CheckpointService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointService.swift; sourceTree = "<group>"; };
 		E971ADC12BFF704D00EAB46E /* sprint.adoc */ = {isa = PBXFileReference; lastKnownFileType = text; path = sprint.adoc; sourceTree = "<group>"; };
 		E971ADC32BFF708000EAB46E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				E9F9D3312BA1D9200054FC9C /* JournalService.swift */,
 				E9F9D3332BA1D9430054FC9C /* ViewModel.swift */,
 				E936A69A2BD144BA00821C4F /* CheckpointService.swift */,
+				84FD8E5F2C2B597600241036 /* Config.swift */,
 			);
 			path = "jungle-book-ios-app";
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				E9F9D3342BA1D9430054FC9C /* ViewModel.swift in Sources */,
 				E936A69B2BD144BA00821C4F /* CheckpointService.swift in Sources */,
 				E9F9D3302BA1D90B0054FC9C /* Model.swift in Sources */,
+				84FD8E602C2B597600241036 /* Config.swift in Sources */,
 				EBBB87955615B57B8143BDE3 /* JunglebookApp.swift in Sources */,
 				EBBB801BFD0E601A0B82EF0D /* ContentView.swift in Sources */,
 				E9F9D3322BA1D9200054FC9C /* JournalService.swift in Sources */,

@@ -159,6 +159,7 @@ struct PhotobookView: View {
     
     var body: some View {
         VStack {
+            Text("Your Journals").font(.system(size: 25));
             List(viewModel.journals) {
                 journal in
                 //  Text("\(journal.name)");
@@ -170,7 +171,7 @@ struct PhotobookView: View {
                     VStack {
                         Text("\(journal.name)").font(.system(.title));
                         //https://student.cloud.htl-leonding.ac.at/m.schablinger/api/image/
-                        AsyncImage(url: URL(string: "http://172.17.28.48:8000/api/image/" + journal.image)){ result in
+                        AsyncImage(url: URL(string: Config.URL + "/api/image/" + journal.image)){ result in
                             result.image?
                                 .resizable()
                         }
